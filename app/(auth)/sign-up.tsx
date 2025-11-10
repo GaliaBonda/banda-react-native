@@ -59,7 +59,6 @@ export default function SignUpScreen() {
         <Button
           title="Continue"
           onPress={async () => {
-            console.log({ username, password });
             if (!username || !password || !email) {
               throw new Error("No auth");
             }

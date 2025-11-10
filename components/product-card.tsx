@@ -1,9 +1,8 @@
-import {StyleSheet } from "react-native";
+import { StyleSheet, Image, View } from "react-native";
 
 import { Link } from "expo-router";
 import { ThemedText } from "./themed-text";
 import { ProductType } from "@/types/product-type";
-import { ThemedView } from "./themed-view";
 
 export type ProductCardProps = {
   product: ProductType;
@@ -11,41 +10,59 @@ export type ProductCardProps = {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <ThemedView
-      key={product.id}
-      style={{
-        maxWidth: "46%",
-      }}
-    >
-      <Link href={`/products/${product.id}`}>
-        <Link.Trigger>
-          <ThemedText type="subtitle">
-            {product.title}, {product.price}
+    <Link href={`/products/${product.id}`} style={styles.card}>
+      <Link.Preview />
+      <Link.Trigger>
+        <View>
+          <View
+            style={{
+              backgroundColor: "#ffff",
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+            }}
+          >
+            <Image
+              source={{ uri: product.image }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          </View>
+
+          <ThemedText
+            style={styles.name}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {product.title}
           </ThemedText>
-        </Link.Trigger>
-        <Link.Preview />
-      </Link>
-    </ThemedView>
+          <ThemedText style={styles.price}>${product.price}</ThemedText>
+        </View>
+      </Link.Trigger>
+    </Link>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-  },
-  title: {
-    color: "#FFFFFF",
-    fontSize: 16,
-  },
-  productsContainer: {
-    // display: 'flex',
+  card: {
+    backgroundColor: "#3D3C37",
+    maxWidth: "46%",
+    borderRadius: 8,
     flexDirection: "row",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-    gap: 20,
-    flex: 1,
+    alignItems: "center",
+  },
+  image: {
+    width: "100%",
+    height: 220,
+  },
+
+  name: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  price: {
+    fontSize: 14,
+    color: "#888",
+    marginBottom: 10,
   },
 });

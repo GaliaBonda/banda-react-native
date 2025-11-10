@@ -7,35 +7,40 @@ import React, { useEffect, useState } from "react";
 import { ProductType } from "@/types/product-type";
 import { ProductCard } from "@/components/product-card";
 import { Footer } from "@/components/footer";
+import { useSession } from "@/contexts/auth-context";
 
 export default function ProductsScreen() {
   const insets = useSafeAreaInsets();
 
   const [products, setProducts] = useState<ProductType[]>();
 
+  const {session} = useSession();
+
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    if (!session) return;
+    fetch("https://fakestoreapi.com/products", {
+      headers: {
+        Authorization: `Bearer ${session}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setProducts(data));
-  }, []);
+  }, [session]);
 
   return (
-    
-      <ThemedView style={{ ...styles.container, paddingTop: insets.top }}>
-        <ThemedText style={styles.title} type="title">
-          Products
-        </ThemedText>
-        <ScrollView>
+    <ThemedView style={{ ...styles.container, paddingTop: insets.top }}>
+      <ThemedText style={styles.title} type="title">
+        Products
+      </ThemedText>
+      <ScrollView style={{paddingTop: 20, }} contentContainerStyle={{ paddingBottom: 20 }}>
         <ThemedView style={styles.productsContainer}>
           {products?.map((product) => {
-            return (
-              <ProductCard product={product} key={product.id}/>
-            );
+            return <ProductCard product={product} key={product.id} />;
           })}
         </ThemedView>
-        </ScrollView>
-         <Footer/>
-      </ThemedView>
+      </ScrollView>
+      <Footer />
+    </ThemedView>
   );
 }
 
@@ -51,6 +56,7 @@ const styles = StyleSheet.create({
   title: {
     color: "#FFFFFF",
     fontSize: 16,
+    alignSelf: 'flex-start'
   },
   productsContainer: {
     flexDirection: "row",

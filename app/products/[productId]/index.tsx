@@ -7,21 +7,27 @@ import AnimatedStyleUpdateExample from "@/components/animation-example";
 import { useEffect, useState } from "react";
 import { ProductType } from "@/types/product-type";
 import { Footer } from "@/components/footer";
+import { useSession } from "@/contexts/auth-context";
 
 export default function ProductScreen() {
   const param = useSearchParams();
 
   const productId = param.get("productId");
 
-    const [product, setProduct] = useState<ProductType>();
+  const {session} = useSession();
 
+  const [product, setProduct] = useState<ProductType>();
 
   useEffect(() => {
-    if (!productId) return;
-    fetch(`https://fakestoreapi.com/products/${productId}`)
+    if (!productId || !session) return;
+    fetch(`https://fakestoreapi.com/products/${productId}`, {
+      headers: {
+        Authorization: `Bearer ${session}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setProduct(data));
-  }, [productId]);
+  }, [productId, session]);
 
   return (
     <ThemedView style={styles.container}>
@@ -30,7 +36,7 @@ export default function ProductScreen() {
       </ThemedText>
       <ThemedText>{JSON.stringify(product)}</ThemedText>
       <AnimatedStyleUpdateExample />
-       <Footer/>
+      <Footer />
     </ThemedView>
   );
 }

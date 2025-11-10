@@ -76,7 +76,6 @@ export default function SignInScreen() {
         <Button
           title="Continue"
           onPress={async () => {
-            console.log({ username, password });
             if (!username || !password) {
               throw new Error("No auth");
             }

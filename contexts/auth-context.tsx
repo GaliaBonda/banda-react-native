@@ -68,7 +68,6 @@ export function SessionProvider({ children }: PropsWithChildren) {
           }
 
           const data = await response.json();
-          console.log({ data });
           if (!data || !data.token) {
             throw new Error("Authorization failed: no token.");
           }
@@ -82,7 +81,6 @@ export function SessionProvider({ children }: PropsWithChildren) {
             body: JSON.stringify({ username, password, email }),
           }).then((response) => response.json());
 
-          console.log({ newUser });
           return newUser ?? null;
         },
         signOut: () => {

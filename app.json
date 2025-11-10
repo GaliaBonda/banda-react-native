@@ -35,13 +35,13 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo-black.png",
-          "imageWidth": 200,
+          "image": "./assets/images/logo-banda.png",
+          "imageWidth": 250,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
             "backgroundColor": "#232320",
-            "image": "./assets/images/logo-black.png"
+            "image": "./assets/images/logo-banda.png"
           }
         }
       ],

@@ -24,18 +24,20 @@ export function ProductCard({ product }: ProductCardProps) {
             <Image
               source={{ uri: product.image }}
               style={styles.image}
-              resizeMode="cover"
+              resizeMode="contain"
             />
           </View>
 
-          <ThemedText
-            style={styles.name}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {product.title}
-          </ThemedText>
-          <ThemedText style={styles.price}>${product.price}</ThemedText>
+          <View style={{paddingTop: 8, paddingBottom: 16, paddingHorizontal: 4}}>
+            <ThemedText
+              style={styles.name}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {product.title}
+            </ThemedText>
+            <ThemedText style={styles.price}>${product.price}</ThemedText>
+          </View>
         </View>
       </Link.Trigger>
     </Link>
@@ -63,6 +65,5 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 14,
     color: "#888",
-    marginBottom: 10,
   },
 });

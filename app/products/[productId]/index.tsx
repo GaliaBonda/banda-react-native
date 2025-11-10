@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
 
-import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { useSearchParams } from "expo-router/build/hooks";
-import AnimatedStyleUpdateExample from "@/components/animation-example";
 import { useEffect, useState } from "react";
 import { ProductType } from "@/types/product-type";
 import { Footer } from "@/components/footer";
 import { useSession } from "@/contexts/auth-context";
+import { ProductView } from "@/components/product-view";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function ProductScreen() {
+  const insets = useSafeAreaInsets();
   const param = useSearchParams();
 
   const productId = param.get("productId");
@@ -30,12 +31,9 @@ export default function ProductScreen() {
   }, [productId, session]);
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText style={styles.title} type="title">
-        Product {param.get("productId")}
-      </ThemedText>
-      <ThemedText>{JSON.stringify(product)}</ThemedText>
-      <AnimatedStyleUpdateExample />
+    <ThemedView style={{...styles.container, paddingBottom: insets.bottom, paddingTop: insets.top }}>
+      
+      {!!product?.id && <ProductView product={product}/>}
       <Footer />
     </ThemedView>
   );

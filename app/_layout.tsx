@@ -10,6 +10,7 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { SplashScreenController } from "@/components/splash";
 import { SessionProvider, useSession } from "@/contexts/auth-context";
+import ToastManager from 'toastify-react-native'
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -20,6 +21,14 @@ export default function RootLayout() {
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <RootNavigator />
         <StatusBar style="auto" />
+        <ToastManager
+          theme={"dark"}
+          style={{marginTop: 20}}
+          showProgressBar={false}
+          showCloseIcon={true}
+          animationStyle="fade"
+          useModal={false}
+        />
       </ThemeProvider>
     </SessionProvider>
   );
@@ -40,6 +49,9 @@ function RootNavigator() {
           name="products/[productId]/index"
           options={{
             headerTitle: "",
+            headerStyle: {
+              backgroundColor: "#232320",
+            },
           }}
         />
       </Stack.Protected>

@@ -1,4 +1,4 @@
-import { use, createContext, type PropsWithChildren } from "react";
+import { use, createContext, type PropsWithChildren, useState } from "react";
 
 import { useStorageState } from "@/hooks/use-storage";
 
@@ -19,12 +19,16 @@ const AuthContext = createContext<{
   signOut: () => void;
   session?: string | null;
   isLoading: boolean;
+  userName: string | null;
+  setUserName: (userName: string | null) => void;
 }>({
   signIn: async (_input: SignInInput) => false,
   signUp: async (_input: SignUpInput) => null,
   signOut: () => null,
   session: null,
   isLoading: false,
+  userName: null,
+  setUserName: (_userName: string | null) => {},
 });
 
 // Use this hook to access the user info.
@@ -39,6 +43,7 @@ export function useSession() {
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState("session");
+  const [userName, setUserName] = useState<string | null>(null);
 
   return (
     <AuthContext.Provider
@@ -88,6 +93,10 @@ export function SessionProvider({ children }: PropsWithChildren) {
         },
         session,
         isLoading,
+        setUserName: (name: string | null) => {
+          setUserName(name);
+        },
+        userName,
       }}
     >
       {children}

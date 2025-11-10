@@ -10,7 +10,7 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { SplashScreenController } from "@/components/splash";
 import { SessionProvider, useSession } from "@/contexts/auth-context";
-import ToastManager from 'toastify-react-native'
+import ToastManager from "toastify-react-native";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -23,7 +23,7 @@ export default function RootLayout() {
         <StatusBar style="auto" />
         <ToastManager
           theme={"dark"}
-          style={{marginTop: 20}}
+          style={{ marginTop: 20 }}
           showProgressBar={false}
           showCloseIcon={true}
           animationStyle="fade"
@@ -37,7 +37,19 @@ export default function RootLayout() {
 function RootNavigator() {
   const { session } = useSession();
   return (
-    <Stack>
+    <Stack
+      screenOptions={(props) => {
+        if (props.route.name?.startsWith("(auth)"))
+          return {
+            gestureEnabled: true,
+            animation: "slide_from_bottom",
+          };
+          return {
+            gestureEnabled: true,
+            animation: "simple_push",
+          };
+      }}
+    >
       <Stack.Protected guard={!!session}>
         <Stack.Screen
           name="products/index"
@@ -58,6 +70,14 @@ function RootNavigator() {
       <Stack.Protected guard={!session}>
         <Stack.Screen
           name="(auth)/sign-in"
+          options={{
+            header: () => null,
+          }}
+        />
+      </Stack.Protected>
+      <Stack.Protected guard={!session}>
+        <Stack.Screen
+          name="(auth)/password"
           options={{
             header: () => null,
           }}

@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import { ScrollView, StyleSheet } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
@@ -7,6 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { ProductType } from "@/types/product-type";
 import { ProductCard } from "@/components/product-card";
+import { Footer } from "@/components/footer";
 
 export default function ProductsScreen() {
   const insets = useSafeAreaInsets();
@@ -21,7 +21,7 @@ export default function ProductsScreen() {
 
   return (
     
-      <ThemedView style={{ ...styles.container, paddingTop: insets.top, paddingBottom: insets.bottom }}>
+      <ThemedView style={{ ...styles.container, paddingTop: insets.top }}>
         <ThemedText style={styles.title} type="title">
           Products
         </ThemedText>
@@ -34,6 +34,7 @@ export default function ProductsScreen() {
           })}
         </ThemedView>
         </ScrollView>
+         <Footer/>
       </ThemedView>
   );
 }
@@ -43,7 +44,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 24,
+    paddingLeft: 24,
+    paddingRight: 24,
+    paddingBottom: 20,
   },
   title: {
     color: "#FFFFFF",

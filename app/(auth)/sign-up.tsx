@@ -1,10 +1,10 @@
 import { router } from "expo-router";
-import { Button, ScrollView, StyleSheet, TextInput } from "react-native";
+import { Button, StyleSheet, TextInput } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSession } from "@/contexts/auth-context";
 
 export default function SignUpScreen() {

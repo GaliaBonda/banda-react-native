@@ -61,7 +61,7 @@ export default function SignInScreen() {
           </Link.Trigger>
           <Link.Preview />
         </Link>
-        <ThemedView style={{ alignSelf: 'flex-start',}}>
+        <ThemedView style={{ alignSelf: "flex-start" }}>
           <ThemedView style={styles.checkboxContainer}>
             <Checkbox
               status={testingMode ? "checked" : "unchecked"}
@@ -85,8 +85,9 @@ export default function SignInScreen() {
               password,
               testingMode,
             });
+
             if (success) {
-              router.replace("/");
+              router.replace("/products");
             }
           }}
         />
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
   },
   checkboxContainer: {
     flexDirection: "row",
-   
+
     marginBottom: 20,
   },
   checkbox: {

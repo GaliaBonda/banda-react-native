@@ -15,7 +15,7 @@ type SignUpInput = {
 
 const AuthContext = createContext<{
   signIn: (input: SignInInput) => Promise<boolean>;
-  signUp: (input: SignUpInput) => Promise<{id: number} | null>;
+  signUp: (input: SignUpInput) => Promise<{ id: number } | null>;
   signOut: () => void;
   session?: string | null;
   isLoading: boolean;
@@ -44,23 +44,15 @@ export function SessionProvider({ children }: PropsWithChildren) {
     <AuthContext.Provider
       value={{
         signIn: async ({ username, password, testingMode }: SignInInput) => {
-          const credentials = {username, password}
-          // await fetch("https://fakestoreapi.com/users")
-          //   .then((response) => response.json())
-          //   .then((data) => console.log(data));
-
-          // await fetch("https://fakestoreapi.com/users/11")
-          //   .then((response) => response.json())
-          //   .then((data) => console.log({ singleUser: data }));
+          const credentials = { username, password };
 
           if (testingMode) {
             const allUsers = await fetch("https://fakestoreapi.com/users").then(
               (response) => response.json()
             );
-            const firstUser= allUsers[0];
+            const firstUser = allUsers[0];
             credentials.username = firstUser.username;
             credentials.password = firstUser.password;
-
           }
           const response = await fetch("https://fakestoreapi.com/auth/login", {
             method: "POST",
@@ -77,8 +69,9 @@ export function SessionProvider({ children }: PropsWithChildren) {
 
           const data = await response.json();
           console.log({ data });
-          if (!data || !data.token)
+          if (!data || !data.token) {
             throw new Error("Authorization failed: no token.");
+          }
           setSession(data.token);
           return true;
         },

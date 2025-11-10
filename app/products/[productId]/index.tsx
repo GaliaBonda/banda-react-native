@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import { StyleSheet } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
@@ -7,6 +6,7 @@ import { useSearchParams } from "expo-router/build/hooks";
 import AnimatedStyleUpdateExample from "@/components/animation-example";
 import { useEffect, useState } from "react";
 import { ProductType } from "@/types/product-type";
+import { Footer } from "@/components/footer";
 
 export default function ProductScreen() {
   const param = useSearchParams();
@@ -30,6 +30,7 @@ export default function ProductScreen() {
       </ThemedText>
       <ThemedText>{JSON.stringify(product)}</ThemedText>
       <AnimatedStyleUpdateExample />
+       <Footer/>
     </ThemedView>
   );
 }

@@ -1,11 +1,13 @@
 import { router } from "expo-router";
-import { Button, StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import React, { useState } from "react";
+import { ContainerView } from "@/components/container-view";
+import { CustomText } from "@/components/custom-text";
 import { useSession } from "@/contexts/auth-context";
+import React, { useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { CustomButton } from "@/components/ui/button";
+import PasswordInput from "@/components/ui/password-input";
 
 export default function SignUpScreen() {
   const insets = useSafeAreaInsets();
@@ -17,7 +19,7 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState("");
 
   return (
-    <ThemedView
+    <ContainerView
       style={{
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
@@ -25,11 +27,10 @@ export default function SignUpScreen() {
         height: "100%",
       }}
     >
-      <ThemedText style={styles.title} type="title">
-        Sign In
-      </ThemedText>
-
-      <ThemedView style={{ width: "100%", ...styles.container }}>
+      <ContainerView style={{ width: "100%", ...styles.container }}>
+        <CustomText style={styles.title} type="title">
+          Sign Up
+        </CustomText>
         <TextInput
           style={styles.input}
           onChangeText={setUsername}
@@ -48,30 +49,25 @@ export default function SignUpScreen() {
           autoComplete="email"
           autoCorrect={false}
         />
-        <TextInput
-          placeholderTextColor="#FFFFFF80"
-          style={styles.input}
-          onChangeText={setPassword}
-          value={password}
-          placeholder="Password"
-        //   secureTextEntry={true}
-        />
-        <Button
-          title="Continue"
+        <PasswordInput password={password} setPassword={setPassword} />
+
+        <CustomButton
           onPress={async () => {
             if (!username || !password || !email) {
               throw new Error("No auth");
             }
             const newUser = await signUp({ username, password, email });
             if (!newUser) {
-                throw new Error("Sign up failed: user profile wasn't created");
+              throw new Error("Sign up failed: user profile wasn't created");
             }
             // Navigate after signing in. You may want to tweak this to ensure sign-in is successful before navigating.
             router.replace("/sign-in");
           }}
-        />
-      </ThemedView>
-    </ThemedView>
+        >
+          Continue
+        </CustomButton>
+      </ContainerView>
+    </ContainerView>
   );
 }
 
@@ -84,15 +80,16 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   title: {
-    color: "#FFFFFF",
-    fontSize: 16,
+    alignSelf: "flex-start",
+    marginBottom: 32,
   },
   input: {
     height: 56,
     width: "100%",
-    borderWidth: 1,
-    padding: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 12,
     backgroundColor: "#2F2F2D",
-    color: "#FFFFFF80",
+    color: "#ffff",
+    borderRadius: 4,
   },
 });

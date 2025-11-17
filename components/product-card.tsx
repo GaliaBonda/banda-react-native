@@ -1,8 +1,8 @@
-import { StyleSheet, Image, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
-import { Link } from "expo-router";
-import { ThemedText } from "./themed-text";
 import { ProductType } from "@/types/product-type";
+import { Link } from "expo-router";
+import { CustomText } from "./custom-text";
 
 export type ProductCardProps = {
   product: ProductType;
@@ -29,14 +29,14 @@ export function ProductCard({ product }: ProductCardProps) {
           </View>
 
           <View style={{paddingTop: 8, paddingBottom: 16, paddingHorizontal: 4}}>
-            <ThemedText
+            <CustomText
               style={styles.name}
               numberOfLines={1}
               ellipsizeMode="tail"
             >
               {product.title}
-            </ThemedText>
-            <ThemedText style={styles.price}>${product.price}</ThemedText>
+            </CustomText>
+            <CustomText style={styles.price}>${product.price}</CustomText>
           </View>
         </View>
       </Link.Trigger>
@@ -47,16 +47,16 @@ export function ProductCard({ product }: ProductCardProps) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#3D3C37",
-    maxWidth: "46%",
+    width: "46%",
     borderRadius: 8,
     flexDirection: "row",
     alignItems: "center",
   },
   image: {
     width: "100%",
+    minWidth: "100%",
     height: 220,
   },
-
   name: {
     fontSize: 16,
     fontWeight: "bold",

@@ -1,13 +1,13 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import React, { useEffect, useState } from "react";
-import { ProductType } from "@/types/product-type";
-import { ProductCard } from "@/components/product-card";
+import { ContainerView } from "@/components/container-view";
+import { CustomText } from "@/components/custom-text";
 import { Footer } from "@/components/footer";
+import { ProductCard } from "@/components/product-card";
 import { useSession } from "@/contexts/auth-context";
+import { ProductType } from "@/types/product-type";
+import React, { useEffect, useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function ProductsScreen() {
   const insets = useSafeAreaInsets();
@@ -28,19 +28,19 @@ export default function ProductsScreen() {
   }, [session]);
 
   return (
-    <ThemedView style={{ ...styles.container, paddingTop: insets.top }}>
-      <ThemedText style={styles.title} type="title">
+    <ContainerView style={{ ...styles.container, paddingTop: insets.top }}>
+      <CustomText style={styles.title} type="title">
         Products
-      </ThemedText>
+      </CustomText>
       <ScrollView style={{paddingTop: 20, }} contentContainerStyle={{ paddingBottom: 20 }}>
-        <ThemedView style={styles.productsContainer}>
+        <View style={styles.productsContainer}>
           {products?.map((product) => {
             return <ProductCard product={product} key={product.id} />;
           })}
-        </ThemedView>
+        </View>
       </ScrollView>
       <Footer />
-    </ThemedView>
+    </ContainerView>
   );
 }
 

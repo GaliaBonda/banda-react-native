@@ -1,34 +1,33 @@
 import { router } from "expo-router";
-import { StyleSheet, TextInput, View } from "react-native";
+import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import React, { useCallback, useState } from "react";
+import { ContainerView } from "@/components/container-view";
+import { CustomText } from "@/components/custom-text";
+import { CustomButton } from "@/components/ui/button";
 import { useSession } from "@/contexts/auth-context";
 import { Checkbox } from "@futurejj/react-native-checkbox";
+import React, { useCallback, useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Toast } from "toastify-react-native";
-import { CustomButton } from "@/components/ui/button";
-import { AnimateInView } from "@/components/animate-in-view";
+import PasswordInput from "@/components/ui/password-input";
 
 export default function PasswordScreen() {
   const insets = useSafeAreaInsets();
 
   const { signIn, userName } = useSession();
- 
+
   const [password, setPassword] = useState("");
   const [testingMode, setTestingMode] = useState(false);
 
-  const toggleTestingMode = () => {
+  const toggleTestingMode = (event: GestureResponderEvent) => {
+    event.stopPropagation();
     setTestingMode((prev) => !prev);
   };
 
-  
-
   const handleContinue = useCallback(async () => {
     if (!userName) {
-        Toast.error("Username is not found");
-        router.replace("/(auth)/sign-in");
+      Toast.error("Username is not found");
+      router.replace("/(auth)/sign-in");
       return;
     }
     if (!password) {
@@ -43,7 +42,7 @@ export default function PasswordScreen() {
       });
 
       if (success) {
-        router.replace("/products");
+        router.replace("/");
       }
     } catch (er) {
       const error = er as { message: string };
@@ -53,7 +52,7 @@ export default function PasswordScreen() {
   }, [userName, password, signIn, testingMode]);
 
   return (
-    <ThemedView
+    <ContainerView
       style={{
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
@@ -62,40 +61,31 @@ export default function PasswordScreen() {
       }}
     >
       <View style={{ width: "100%", ...styles.container }}>
-        <ThemedText style={styles.title} type="title">
+        <CustomText style={styles.title} type="title">
           Sign In
-        </ThemedText>
-         
-          <AnimateInView style={{ width: "100%" }}>
-            <TextInput
-              placeholderTextColor="#FFFFFF80"
-              style={styles.input}
-              onChangeText={setPassword}
-              value={password}
-              placeholder="Password"
-              // secureTextEntry={true}
-            />
-          </AnimateInView>
-        
-       
-       
-          <View style={{ alignSelf: "flex-start" }}>
+        </CustomText>
+
+        <PasswordInput password={password} setPassword={setPassword} />
+
+        <View style={{ alignSelf: "flex-start" }}>
+          <TouchableOpacity onPress={toggleTestingMode}>
             <View style={styles.checkboxContainer}>
               <Checkbox
                 status={testingMode ? "checked" : "unchecked"}
-                onPress={toggleTestingMode}
                 style={styles.checkbox}
                 color="#FFD600"
+                onPress={toggleTestingMode}
               />
-              <ThemedText style={styles.label}>
+              <CustomText style={styles.label}>
                 Use testing sign-in data?
-              </ThemedText>
+              </CustomText>
             </View>
-          </View>
-        
+          </TouchableOpacity>
+        </View>
+
         <CustomButton onPress={handleContinue}>Continue</CustomButton>
       </View>
-    </ThemedView>
+    </ContainerView>
   );
 }
 
@@ -117,7 +107,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 12,
     backgroundColor: "#2F2F2D",
-    color: "#FFFFFF80",
+    color: "#ffff",
     borderRadius: 4,
   },
   checkboxContainer: {

@@ -1,12 +1,12 @@
 import { StyleSheet } from "react-native";
 
-import { ThemedView } from "@/components/themed-view";
+import { ContainerView } from "@/components/container-view";
+import { Footer } from "@/components/footer";
+import { ProductView } from "@/components/product-view";
+import { useSession } from "@/contexts/auth-context";
+import { ProductType } from "@/types/product-type";
 import { useSearchParams } from "expo-router/build/hooks";
 import { useEffect, useState } from "react";
-import { ProductType } from "@/types/product-type";
-import { Footer } from "@/components/footer";
-import { useSession } from "@/contexts/auth-context";
-import { ProductView } from "@/components/product-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function ProductScreen() {
@@ -31,11 +31,11 @@ export default function ProductScreen() {
   }, [productId, session]);
 
   return (
-    <ThemedView style={{...styles.container, paddingBottom: insets.bottom, paddingTop: insets.top }}>
+    <ContainerView style={{...styles.container, paddingBottom: insets.bottom, paddingTop: insets.top }}>
       
       {!!product?.id && <ProductView product={product}/>}
       <Footer />
-    </ThemedView>
+    </ContainerView>
   );
 }
 

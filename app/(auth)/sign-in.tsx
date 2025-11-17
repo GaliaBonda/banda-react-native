@@ -1,13 +1,13 @@
 import { Link, useRouter } from "expo-router";
 import { StyleSheet, TextInput, View } from "react-native";
 
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import React, { useCallback, useState } from "react";
-import { useSession } from "@/contexts/auth-context";
-import { Toast } from "toastify-react-native";
+import { ContainerView } from "@/components/container-view";
+import { CustomText } from "@/components/custom-text";
 import { CustomButton } from "@/components/ui/button";
+import { useSession } from "@/contexts/auth-context";
+import React, { useCallback, useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Toast } from "toastify-react-native";
 
 export default function SignInScreen() {
   const insets = useSafeAreaInsets();
@@ -25,10 +25,10 @@ export default function SignInScreen() {
     }
     setUserName(username);
     router.push('/(auth)/password')
-  }, [username]);
+  }, [router, setUserName, username]);
 
   return (
-    <ThemedView
+    <ContainerView
       style={{
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
@@ -37,9 +37,9 @@ export default function SignInScreen() {
       }}
     >
       <View style={{ width: "100%", ...styles.container }}>
-        <ThemedText style={styles.title} type="title">
+        <CustomText style={styles.title} type="title">
           Sign In
-        </ThemedText>
+        </CustomText>
 
         <TextInput
           style={styles.input}
@@ -54,16 +54,16 @@ export default function SignInScreen() {
           style={{ alignSelf: "flex-end", textDecorationLine: "underline" }}
         >
           <Link.Trigger>
-            <ThemedText type="link" style={{ color: "#ffff", fontSize: 14 }}>
+            <CustomText type="link" style={{ color: "#ffff", fontSize: 14 }}>
               Sign up
-            </ThemedText>
+            </CustomText>
           </Link.Trigger>
           <Link.Preview />
         </Link>
 
         <CustomButton onPress={handleContinue}>Continue</CustomButton>
       </View>
-    </ThemedView>
+    </ContainerView>
   );
 }
 
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 12,
     backgroundColor: "#2F2F2D",
-    color: "#FFFFFF80",
+    color: "#ffff",
     borderRadius: 4,
   },
   checkboxContainer: {

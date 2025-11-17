@@ -1,8 +1,8 @@
-import { StyleSheet, Image, View, ScrollView } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 
-import { ThemedText } from "./themed-text";
 import { ProductType } from "@/types/product-type";
-import { ThemedView } from "./themed-view";
+import { ContainerView } from "./container-view";
+import { CustomText } from "./custom-text";
 
 export type ProductViewProps = {
   product: ProductType;
@@ -10,7 +10,7 @@ export type ProductViewProps = {
 
 export function ProductView({ product }: ProductViewProps) {
   return (
-    <ThemedView>
+    <ContainerView>
       <ScrollView
         style={{ paddingTop: 20 }}
         contentContainerStyle={{ paddingBottom: 20 }}
@@ -25,28 +25,28 @@ export function ProductView({ product }: ProductViewProps) {
           </View>
         </View>
 
-        <ThemedText  type="subtitle">{product.title}</ThemedText>
-        <ThemedText style={styles.price}>${product.price}</ThemedText>
+        <CustomText  type="subtitle">{product.title}</CustomText>
+        <CustomText style={styles.price}>${product.price}</CustomText>
         <View style={{ flexDirection: "column", gap: 24, marginTop: 12 }}>
-          <ThemedText type="secondary" >
+          <CustomText type="secondary" >
             {product.description}
-          </ThemedText>
+          </CustomText>
           <View>
-            <ThemedText type="subtitle">Shipping & Returns</ThemedText>
-            <ThemedText type="secondary">
+            <CustomText type="subtitle">Shipping & Returns</CustomText>
+            <CustomText type="secondary">
               Free standard shipping and free 60-day returns
-            </ThemedText>
+            </CustomText>
           </View>
           {product.rating && (
             <View>
-              <ThemedText type="subtitle">Reviews</ThemedText>
-              <ThemedText style={styles.ratings}>{product.rating.rate} Ratings</ThemedText>
-              <ThemedText type="secondary">{product.rating.count} Reviews</ThemedText>
+              <CustomText type="subtitle">Reviews</CustomText>
+              <CustomText style={styles.ratings}>{product.rating.rate} Ratings</CustomText>
+              <CustomText type="secondary">{product.rating.count} Reviews</CustomText>
             </View>
           )}
         </View>
       </ScrollView>
-    </ThemedView>
+    </ContainerView>
   );
 }
 

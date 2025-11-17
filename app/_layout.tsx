@@ -33,11 +33,9 @@ function RootNavigator() {
       screenOptions={(props) => {
         if (props?.route?.name?.startsWith("(auth)"))
           return {
-            gestureEnabled: true,
             animation: "slide_from_bottom",
           };
         return {
-          gestureEnabled: true,
           animation: "simple_push",
         };
       }}

@@ -14,7 +14,7 @@ export default function ProductsScreen() {
 
   const [products, setProducts] = useState<ProductType[]>();
 
-  const {session} = useSession();
+  const { session } = useSession();
 
   useEffect(() => {
     if (!session) return;
@@ -32,7 +32,10 @@ export default function ProductsScreen() {
       <CustomText style={styles.title} type="title">
         Products
       </CustomText>
-      <ScrollView style={{paddingTop: 20, }} contentContainerStyle={{ paddingBottom: 20 }}>
+      <ScrollView
+        style={{ paddingTop: 20 }}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
         <View style={styles.productsContainer}>
           {products?.map((product) => {
             return <ProductCard product={product} key={product.id} />;
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
   title: {
     color: "#FFFFFF",
     fontSize: 16,
-    alignSelf: 'flex-start'
+    alignSelf: "flex-start",
   },
   productsContainer: {
     flexDirection: "row",
